@@ -1,4 +1,4 @@
-package com.bokecc.learn.po;
+package com.mb.learn.po;
 
 import org.apache.ibatis.type.Alias;
 

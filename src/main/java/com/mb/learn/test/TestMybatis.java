@@ -1,7 +1,7 @@
-package com.bokecc.learn.test;
+package com.mb.learn.test;
 
-import com.bokecc.learn.dao.RoleMapper;
-import com.bokecc.learn.po.Role;
+import com.mb.learn.dao.RoleMapper;
+import com.mb.learn.po.Role;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;

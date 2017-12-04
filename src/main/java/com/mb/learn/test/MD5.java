@@ -1,4 +1,4 @@
-package com.bokecc.learn.test;
+package com.mb.learn.test;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;

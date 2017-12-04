@@ -1,4 +1,4 @@
-package com.bokecc.learn.util;
+package com.mb.learn.util;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
