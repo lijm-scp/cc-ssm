@@ -1,19 +1,36 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 
 <!DOCTYPE configuration
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-    <properties resource="jdbc.properties" />
+    <properties resource="jdbc.properties"/>
     <typeAliases>
-        <package name="com.bokecc.learn.po"/>
+        <package name="com.mb.learn.po"/>
     </typeAliases>
-    <typeHandlers>
-        <typeHandler handler="" />
-    </typeHandlers>
+    <!--<typeHandlers>-->
+    <!--<typeHandler handler="" />-->
+    <!--</typeHandlers>-->
+    <!--<objectFactory type="com.mb.learn.base.MyObjectFactory">-->
+    <!--<property name="name" value="MyObjectFactory"/>-->
+    <!--</objectFactory>-->
+
+    <!--environments中可以配置多个数据源,default指定默认使用哪个数据源-->
     <environments default="development">
         <environment id="development">
-            <transactionManager type="JDBC"></transactionManager>
+            <!--事务有三种类型-->
+            <!--JDBC,采用JDBC方式管理事务,在独立编码中我们常常使用-->
+            <!--MANAGED,采用容器方式管理事务,在JNDI数据源中常用-->
+            <!--自定义,由使用者自定义事务管理办法,适用于特殊应用-->
+            <transactionManager type="JDBC">
+                <!--设置不自动提交-->
+                <property name="autoCommit" value="false"/>
+            </transactionManager>
+            <!--type属性是dataSource的配置方式,有一下几种-->
+            <!--UNPOOLED,非连接池数据库-->
+            <!--POOLED,连接池数据库-->
+            <!--JNDI,JNDI数据源-->
+            <!--自定义数据源-->
             <dataSource type="POOLED">
                 <property name="driver" value="${jdbc.driver}"/>
                 <property name="url" value="${jdbc.url}"/>
@@ -22,8 +39,8 @@
             </dataSource>
         </environment>
     </environments>
-    <!--?????-->
     <mappers>
-        <mapper resource="com/bokecc/learn/mapper/roleMapper.xml"/>
+        <mapper resource="com/mb/learn/mapper/roleMapper.xml"/>
+        <!--<package name="com.mb.learn.mapper" />-->
     </mappers>
 </configuration>

@@ -1,10 +1,23 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mb.learn.dao.RoleMapper">
+    <!--mybatis默认开启自动映射功能-->
     <select id="getRoleById" parameterType="java.lang.Long" resultType="role">
-        select 1 as id,'abc' as name
+        select id as id,name as name ,note as note from test_role where id = #{id}
+    </select>
+    <insert id="saveRole" parameterType="role">
+        insert into test_role(id,name,note) values(#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{note,jdbcType=VARCHAR})
+    </insert>
+    <select id="findRolesByMap" parameterType="map" resultType="role">
+        select id,name,note from test_role t where t.name like concat('%',#{name},'%')
+    </select>
+    <select id="findRolesByAnnotation" resultType="role">
+        select id,name,note from test_role t where t.name like concat('%',#{name},'%')
+    </select>
+    <select id="findRolesByParam" parameterType="com.mb.learn.param.RoleParam" resultType="role">
+        select id,name,note from test_role t where t.name like concat('%',#{name},'%')
     </select>
 </mapper>
