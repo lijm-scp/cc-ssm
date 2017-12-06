@@ -6,6 +6,15 @@ import org.apache.ibatis.type.Alias;
 public class Role {
     private long id;
     private String name;
+    private String note;
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
 
     public long getId() {
         return id;
@@ -28,6 +37,7 @@ public class Role {
         return "Role{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", note='" + note + '\'' +
                 '}';
     }
 }

@@ -5,11 +5,25 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mb.learn.dao.RoleMapper">
     <!--mybatis默认开启自动映射功能-->
+    <resultMap id="roleMap" type="com.mb.learn.po.Role">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="role" property="role"/>
+    </resultMap>
+    <sql id="base_column">
+        id,name,note
+    </sql>
     <select id="getRoleById" parameterType="java.lang.Long" resultType="role">
-        select id as id,name as name ,note as note from test_role where id = #{id}
+        select
+        <include refid="base_column"/>
+        from test_role where id = #{id}
     </select>
-    <insert id="saveRole" parameterType="role">
-        insert into test_role(id,name,note) values(#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{note,jdbcType=VARCHAR})
+    <insert id="saveRole" parameterType="role" keyProperty="id" useGeneratedKeys="true">
+        -- 自定义id生成规则
+        <!--<selectKey keyProperty="id" resultType="long" order="BEFORE">-->
+        <!--select if(max(id) is null , 1, max(id)+2) as newId from test_role-->
+        <!--</selectKey>-->
+        insert into test_role(name,note) values(#{name}, #{note})
     </insert>
     <select id="findRolesByMap" parameterType="map" resultType="role">
         select id,name,note from test_role t where t.name like concat('%',#{name},'%')
@@ -17,7 +31,7 @@
     <select id="findRolesByAnnotation" resultType="role">
         select id,name,note from test_role t where t.name like concat('%',#{name},'%')
     </select>
-    <select id="findRolesByParam" parameterType="com.mb.learn.param.RoleParam" resultType="role">
+    <select id="findRolesByParam" parameterType="com.mb.learn.param.RoleParam" resultMap="roleMap">
         select id,name,note from test_role t where t.name like concat('%',#{name},'%')
     </select>
 </mapper>

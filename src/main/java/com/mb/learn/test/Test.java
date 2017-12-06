@@ -1,6 +1,8 @@
 package com.mb.learn.test;
 
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,5 +17,8 @@ public class Test {
         System.out.println(timestamp);
         System.out.println(access_sign);
         Map<String,String> map = new HashMap<>();
+        Date date = new Date(1500629025091l);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        System.out.println(sdf.format(date));
     }
 }

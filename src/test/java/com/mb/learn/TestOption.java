@@ -102,4 +102,24 @@ public class TestOption {
             }
         }
     }
+    @Test
+    public void saveRole() throws Exception {
+        try {
+            RoleMapper roleMapper = session.getMapper(RoleMapper.class);
+            Role role = new Role();
+            role.setName("abcddddd");
+            role.setNote("ddaafff");
+            int i = roleMapper.saveRole(role);
+            System.out.println(role);
+            System.out.println(i);
+            session.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            session.rollback();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
 }
