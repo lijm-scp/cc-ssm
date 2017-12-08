@@ -1,8 +1,10 @@
 package com.mb.learn;
 
 import com.mb.learn.dao.RoleMapper;
+import com.mb.learn.dao.StudentMapper;
 import com.mb.learn.param.RoleParam;
 import com.mb.learn.po.Role;
+import com.mb.learn.po.StudentBean;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -112,6 +114,22 @@ public class TestOption {
             int i = roleMapper.saveRole(role);
             System.out.println(role);
             System.out.println(i);
+            session.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            session.rollback();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
+    @Test
+    public void selectStudent() throws Exception {
+        try {
+            StudentMapper roleMapper = session.getMapper(StudentMapper.class);
+            StudentBean s = roleMapper.findStudentByName("bbbc");
+            System.out.println(s);
             session.commit();
         } catch (Exception e) {
             e.printStackTrace();

@@ -41,6 +41,8 @@
     </environments>
     <mappers>
         <mapper resource="com/mb/learn/mapper/roleMapper.xml"/>
+        <mapper resource="com/mb/learn/mapper/studentMapper.xml"/>
+        <mapper resource="com/mb/learn/mapper/studentSelfCardMapper.xml"/>
         <!--<package name="com.mb.learn.mapper" />-->
     </mappers>
 </configuration>
