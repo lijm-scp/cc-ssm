@@ -140,4 +140,24 @@ public class TestOption {
             }
         }
     }
+    @Test
+    public void selectStudentGrade() throws Exception {
+        try {
+            StudentMapper roleMapper = session.getMapper(StudentMapper.class);
+            StudentBean s = roleMapper.findStudentByName("wyy");
+            System.out.println("-------------------------------------");
+            System.out.println(s.getStudentSelfCardBean());
+            System.out.println("-------------------------------------");
+            System.out.println(s.getStudentLectureList());
+
+            session.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            session.rollback();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
 }

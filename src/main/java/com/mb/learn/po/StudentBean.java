@@ -1,10 +1,13 @@
 package com.mb.learn.po;
 
+import java.util.List;
+
 public class StudentBean {
     private long id;
     private String name;
-    private String note;
+    private String sex;
     private StudentSelfCardBean studentSelfCardBean;
+    private List<StudentLectureBean> studentLectureList;
 
     public long getId() {
         return id;
@@ -22,12 +25,12 @@ public class StudentBean {
         this.name = name;
     }
 
-    public String getNote() {
-        return note;
+    public String getSex() {
+        return sex;
     }
 
-    public void setNote(String note) {
-        this.note = note;
+    public void setSex(String sex) {
+        this.sex = sex;
     }
 
     public StudentSelfCardBean getStudentSelfCardBean() {
@@ -38,13 +41,22 @@ public class StudentBean {
         this.studentSelfCardBean = studentSelfCardBean;
     }
 
+    public List<StudentLectureBean> getStudentLectureList() {
+        return studentLectureList;
+    }
+
+    public void setStudentLectureList(List<StudentLectureBean> studentLectureList) {
+        this.studentLectureList = studentLectureList;
+    }
+
     @Override
     public String toString() {
         return "StudentBean{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", note='" + note + '\'' +
+                ", sex='" + sex + '\'' +
                 ", studentSelfCardBean=" + studentSelfCardBean +
+                ", studentLectureList=" + studentLectureList +
                 '}';
     }
 }

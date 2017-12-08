@@ -5,6 +5,13 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <properties resource="jdbc.properties"/>
+    <settings>
+        <!--全局设置,并不灵活,不能指定哪些属性立即加载,哪些属性延迟加载-->
+        <!--延迟加载-->
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <!--false为按要求延迟加载,true为按层级延迟加载,即同一级的一并加载-->
+        <setting name="aggressiveLazyLoading" value="false"/>
+    </settings>
     <typeAliases>
         <package name="com.mb.learn.po"/>
     </typeAliases>
@@ -14,7 +21,6 @@
     <!--<objectFactory type="com.mb.learn.base.MyObjectFactory">-->
     <!--<property name="name" value="MyObjectFactory"/>-->
     <!--</objectFactory>-->
-
     <!--environments中可以配置多个数据源,default指定默认使用哪个数据源-->
     <environments default="development">
         <environment id="development">
@@ -43,6 +49,8 @@
         <mapper resource="com/mb/learn/mapper/roleMapper.xml"/>
         <mapper resource="com/mb/learn/mapper/studentMapper.xml"/>
         <mapper resource="com/mb/learn/mapper/studentSelfCardMapper.xml"/>
+        <mapper resource="com/mb/learn/mapper/StudentLectureMapper.xml"/>
+        <mapper resource="com/mb/learn/mapper/LectureMapper.xml"/>
         <!--<package name="com.mb.learn.mapper" />-->
     </mappers>
 </configuration>

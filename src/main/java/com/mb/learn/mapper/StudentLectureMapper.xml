@@ -3,19 +3,21 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.mb.learn.dao.StudentSelfCardMapper">
+<mapper namespace="com.mb.learn.dao.StudentLectureMapper">
     <!--mybatis默认开启自动映射功能-->
-    <resultMap id="cardMap" type="studentSelfCardBean">
+    <resultMap id="studentLectureMap" type="studentLectureBean">
         <id column="id" property="id"/>
         <result column="student_id" property="studentId"/>
+        <result column="grade" property="grade"/>
         <result column="note" property="note"/>
+        <association property="lecture" column="lecture_id" select="com.mb.learn.dao.LectureMapper.findLectureById"/>
     </resultMap>
     <sql id="base_column">
-        id,student_id,note
+        id,student_id,lecture_id,grade,note
     </sql>
-    <select id="findCardByStudentId" parameterType="long" resultMap="cardMap">
+    <select id="findStudentLectureByStuId" parameterType="long" resultMap="studentLectureMap">
         select
         <include refid="base_column"/>
-        from t_student_selfcard where student_id = #{id}
+        from t_student_lecture where student_id = #{id}
     </select>
 </mapper>

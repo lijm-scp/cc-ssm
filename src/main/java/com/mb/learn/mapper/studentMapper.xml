@@ -8,16 +8,30 @@
     <resultMap id="studentMap" type="studentBean">
         <id column="id" property="id"/>
         <result column="student_id" property="studentId"/>
-        <result column="note" property="note"/>
-        <association property="studentSelfCardBean" column="id"
+        <result column="sex" property="sex"/>
+        <!--lazy表示延迟加载,eager表示立即加载,覆盖全局属性-->
+        <association property="studentSelfCardBean" column="id" fetchType="lazy"
                      select="com.mb.learn.dao.StudentSelfCardMapper.findCardByStudentId"/>
+        <collection property="studentLectureList" column="id" fetchType="eager"
+                    select="com.mb.learn.dao.StudentLectureMapper.findStudentLectureByStuId"/>
+        <!--鉴别器-->
+        <!--<discriminator javaType="string" column="sex">-->
+        <!--<case value="1" resultMap="maleStudentMap" />-->
+        <!--<case value="2" resultMap="femaleStudentMap" />-->
+        <!--</discriminator>-->
     </resultMap>
+    <!--<resultMap id="maleStudentMap" type="maleStudentBean">-->
+    <!--<collection property="studentHealthy" column="id" select=""/>-->
+    <!--</resultMap>-->
+    <!--<resultMap id="femaleStudentMap" type="femaleStudentBean">-->
+    <!--<collection property="studentHealthy" column="id" select=""/>-->
+    <!--</resultMap>-->
     <sql id="base_column">
-        id,name,note
+        id,name,sex
     </sql>
     <select id="findStudentByName" parameterType="string" resultMap="studentMap">
         select
         <include refid="base_column"/>
-        from student where name = #{name}
+        from t_student where name = #{name}
     </select>
 </mapper>
