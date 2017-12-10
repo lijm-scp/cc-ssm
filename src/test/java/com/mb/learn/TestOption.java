@@ -5,6 +5,7 @@ import com.mb.learn.dao.StudentMapper;
 import com.mb.learn.param.RoleParam;
 import com.mb.learn.po.Role;
 import com.mb.learn.po.StudentBean;
+import com.mb.learn.util.SqlSessionUtil;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -22,9 +23,7 @@ public class TestOption {
 
     @Before
     public void init() throws Exception {
-        InputStream inputStream = Resources.getResourceAsStream("mybatis-config.xml");
-        SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(inputStream);
-        session = factory.openSession();
+        session = SqlSessionUtil.getSqlSession();
     }
 
     @Test
@@ -65,6 +64,7 @@ public class TestOption {
             }
         }
     }
+
     @Test
     public void testRolesAnnotation() throws Exception {
         try {
@@ -83,6 +83,7 @@ public class TestOption {
             }
         }
     }
+
     @Test
     public void testRolesParam() throws Exception {
         try {
@@ -104,6 +105,7 @@ public class TestOption {
             }
         }
     }
+
     @Test
     public void saveRole() throws Exception {
         try {
@@ -124,6 +126,7 @@ public class TestOption {
             }
         }
     }
+
     @Test
     public void selectStudent() throws Exception {
         try {
@@ -140,6 +143,7 @@ public class TestOption {
             }
         }
     }
+
     @Test
     public void selectStudentGrade() throws Exception {
         try {
@@ -149,8 +153,127 @@ public class TestOption {
             System.out.println(s.getStudentSelfCardBean());
             System.out.println("-------------------------------------");
             System.out.println(s.getStudentLectureList());
-
             session.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            session.rollback();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
+
+    @Test
+    public void testCache() throws Exception {
+        try {
+            StudentMapper roleMapper = session.getMapper(StudentMapper.class);
+            StudentBean s = roleMapper.findStudentByName("wyy");
+            System.out.println("-------------------------------------");
+            System.out.println(s.getStudentSelfCardBean());
+            System.out.println("-------------------------------------");
+            System.out.println(s.getStudentLectureList());
+            System.out.println("-------------第二次查询---------------");
+            StudentBean s2 = roleMapper.findStudentByName("wyy");
+            System.out.println(s2.getStudentLectureList());
+            session.commit();
+            System.out.println("-------------第三次查询----------------");
+            SqlSession session2 = SqlSessionUtil.getSqlSession();
+            StudentBean s3 = session2.getMapper(StudentMapper.class).findStudentByName("wyy");
+            System.out.println(s3.getStudentLectureList());
+        } catch (Exception e) {
+            e.printStackTrace();
+            session.rollback();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
+
+    @Test
+    public void findByCon() throws Exception {
+        try {
+            StudentMapper roleMapper = session.getMapper(StudentMapper.class);
+            StudentBean s = roleMapper.findStudentByCon(1, "wyy");
+            System.out.println(s.getStudentLectureList());
+        } catch (Exception e) {
+            e.printStackTrace();
+            session.rollback();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
+
+    @Test
+    public void findStudentByCon() throws Exception {
+        try {
+            StudentMapper roleMapper = session.getMapper(StudentMapper.class);
+            List<StudentBean> s = roleMapper.findStudents(null, "wyy", "2");
+            System.out.println(s.get(0).getStudentLectureList());
+        } catch (Exception e) {
+            e.printStackTrace();
+            session.rollback();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
+
+    @Test
+    public void findStudentsByCon() throws Exception {
+        try {
+            StudentMapper roleMapper = session.getMapper(StudentMapper.class);
+            List<StudentBean> s = roleMapper.findStudentsByName(null,"wyy");
+            System.out.println(s.get(0).getStudentLectureList());
+        } catch (Exception e) {
+            e.printStackTrace();
+            session.rollback();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
+    @Test
+    public void findStudentsBytrim() throws Exception {
+        try {
+            StudentMapper roleMapper = session.getMapper(StudentMapper.class);
+            List<StudentBean> s = roleMapper.findStudentsByTrim(1l,"wyy");
+            System.out.println(s.get(0).getStudentLectureList());
+        } catch (Exception e) {
+            e.printStackTrace();
+            session.rollback();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
+    @Test
+    public void updateStudent() throws Exception {
+        try {
+            StudentMapper roleMapper = session.getMapper(StudentMapper.class);
+            int i = roleMapper.updateStudent(1l,"wyy","2");
+            System.out.println(i);
+        } catch (Exception e) {
+            e.printStackTrace();
+            session.rollback();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
+    @Test
+    public void selectStudentBySex() throws Exception {
+        try {
+            StudentMapper roleMapper = session.getMapper(StudentMapper.class);
+            List<StudentBean> ss = roleMapper.findStudentsBySex(new String[]{"1","2"});
+            System.out.println(ss.size());
         } catch (Exception e) {
             e.printStackTrace();
             session.rollback();

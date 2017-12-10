@@ -1,9 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.mb.learn.dao.StudentMapper">
+    <!--eviction:-->
+    <!--LRU:最近最少使用的,移除最长时间不用的.-->
+    <!--FIFO:先进先出,按对象进入缓存的顺序来移除它们-->
+    <!--SOFT:软引用,移除基于垃圾回收器状态和软引用规则的对象-->
+    <!--WEEK:弱引用,更更积极的移除基于垃圾回收器状态和弱引用规则的对象-->
+    <!--flushInterval:刷新间隔如果不配置,当sql执行的时候才去刷新-->
+    <!--size:代表缓存多少个对象,不宜设置太多-->
+    <cache eviction="LRU" flushInterval="100000" size="1024" readOnly="true"/>
     <!--mybatis默认开启自动映射功能-->
     <resultMap id="studentMap" type="studentBean">
         <id column="id" property="id"/>
@@ -33,5 +38,85 @@
         select
         <include refid="base_column"/>
         from t_student where name = #{name}
+    </select>
+    <select id="findStudentByCon" resultMap="studentMap">
+        select
+        <include refid="base_column"/>
+        from t_student where
+        1=1
+        <if test="id!=null and id != ''">
+            and id = #{id}
+        </if>
+        <if test="name!=null and name != ''">
+            and name = #{name}
+        </if>
+    </select>
+    <select id="findStudents" resultMap="studentMap">
+        select
+        <include refid="base_column"/>
+        from t_student where
+        1=1
+        <choose>
+            <when test="id!=null and id != ''">
+                and id = #{id}
+            </when>
+            <when test="name!=null and name != ''">
+                and name like concat('%',#{name},'%')
+            </when>
+            <otherwise>
+                and sex = #{sex}
+            </otherwise>
+        </choose>
+    </select>
+    <select id="findStudentsByName" resultMap="studentMap">
+        select
+        <include refid="base_column"/>
+        from t_student
+        <where>
+            <if test="id!=null and id!=''">
+                and id = #{id}
+            </if>
+            <if test="name!=null and name !=''">
+                and name like concat('%',#{name},'%')
+            </if>
+        </where>
+
+    </select>
+    <select id="findStudentsByTrim" resultMap="studentMap">
+        <bind name="pattern_name" value="'%'+name+'%'" />
+        select
+        <include refid="base_column"/>
+        from t_student
+        <trim prefix="where" prefixOverrides="and">
+            <if test="id!=null and id!=''">
+                and id = #{id}
+            </if>
+            <if test="name!=null and name !=''">
+                and name like #{pattern_name}
+            </if>
+        </trim>
+
+    </select>
+    <update id="updateStudent">
+        update t_student
+        <set>
+            <if test="name!=null and name != ''">
+                name = #{name},
+            </if>
+            <if test="sex!=null and name!=''">
+                sex = #{sex},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+    <select id="findStudentsBySex" parameterType="list" resultMap="studentMap">
+        select
+        <include refid="base_column"/>
+        from t_student
+        where sex in
+        <foreach collection="sexs" open="(" close=")" separator="," item="sex" index="index">
+            #{sex}
+        </foreach>
+
     </select>
 </mapper>

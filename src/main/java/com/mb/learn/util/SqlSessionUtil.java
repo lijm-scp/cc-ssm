@@ -32,7 +32,7 @@ public class SqlSessionUtil {
         return factory;
     }
 
-    public SqlSession getSqlSession() {
+    public static SqlSession getSqlSession() {
         initSqlSessionFactory();
         return factory.openSession();
     }
