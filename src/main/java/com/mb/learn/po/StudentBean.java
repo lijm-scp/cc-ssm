@@ -1,7 +1,9 @@
 package com.mb.learn.po;
 
-import java.util.List;
+import org.springframework.stereotype.Repository;
 
+import java.util.List;
+@Repository
 public class StudentBean {
     private long id;
     private String name;

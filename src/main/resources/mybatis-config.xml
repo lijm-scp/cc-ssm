@@ -22,29 +22,29 @@
     <!--<property name="name" value="MyObjectFactory"/>-->
     <!--</objectFactory>-->
     <!--environments中可以配置多个数据源,default指定默认使用哪个数据源-->
-    <environments default="development">
-        <environment id="development">
-            <!--事务有三种类型-->
-            <!--JDBC,采用JDBC方式管理事务,在独立编码中我们常常使用-->
-            <!--MANAGED,采用容器方式管理事务,在JNDI数据源中常用-->
-            <!--自定义,由使用者自定义事务管理办法,适用于特殊应用-->
-            <transactionManager type="JDBC">
-                <!--设置不自动提交-->
-                <property name="autoCommit" value="false"/>
-            </transactionManager>
-            <!--type属性是dataSource的配置方式,有一下几种-->
-            <!--UNPOOLED,非连接池数据库-->
-            <!--POOLED,连接池数据库-->
-            <!--JNDI,JNDI数据源-->
-            <!--自定义数据源-->
-            <dataSource type="POOLED">
-                <property name="driver" value="${jdbc.driver}"/>
-                <property name="url" value="${jdbc.url}"/>
-                <property name="username" value="${jdbc.username}"/>
-                <property name="password" value="${jdbc.password}"/>
-            </dataSource>
-        </environment>
-    </environments>
+    <!--<environments default="development">-->
+        <!--<environment id="development">-->
+            <!--&lt;!&ndash;事务有三种类型&ndash;&gt;-->
+            <!--&lt;!&ndash;JDBC,采用JDBC方式管理事务,在独立编码中我们常常使用&ndash;&gt;-->
+            <!--&lt;!&ndash;MANAGED,采用容器方式管理事务,在JNDI数据源中常用&ndash;&gt;-->
+            <!--&lt;!&ndash;自定义,由使用者自定义事务管理办法,适用于特殊应用&ndash;&gt;-->
+            <!--<transactionManager type="JDBC">-->
+                <!--&lt;!&ndash;设置不自动提交&ndash;&gt;-->
+                <!--<property name="autoCommit" value="false"/>-->
+            <!--</transactionManager>-->
+            <!--&lt;!&ndash;type属性是dataSource的配置方式,有一下几种&ndash;&gt;-->
+            <!--&lt;!&ndash;UNPOOLED,非连接池数据库&ndash;&gt;-->
+            <!--&lt;!&ndash;POOLED,连接池数据库&ndash;&gt;-->
+            <!--&lt;!&ndash;JNDI,JNDI数据源&ndash;&gt;-->
+            <!--&lt;!&ndash;自定义数据源&ndash;&gt;-->
+            <!--<dataSource type="POOLED">-->
+                <!--<property name="driver" value="${jdbc.driver}"/>-->
+                <!--<property name="url" value="${jdbc.url}"/>-->
+                <!--<property name="username" value="${jdbc.username}"/>-->
+                <!--<property name="password" value="${jdbc.password}"/>-->
+            <!--</dataSource>-->
+        <!--</environment>-->
+    <!--</environments>-->
     <mappers>
         <mapper resource="com/mb/learn/mapper/roleMapper.xml"/>
         <mapper resource="com/mb/learn/mapper/studentMapper.xml"/>
